@@ -1,5 +1,3 @@
-name: Custom Tables
-description: Create Custom Table
-package: Custom Module
-type: module
-core: 7.x
+name = Custom Tables
+description = Provides custom tables.
+core = 7.x

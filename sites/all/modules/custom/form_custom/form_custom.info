@@ -1,0 +1,4 @@
+name = Custom Forms
+description = Provides a really neat widget for your site's sidebar.
+core = 7.x
+files[] = form_custom.test

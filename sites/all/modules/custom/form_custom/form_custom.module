@@ -1,0 +1,131 @@
+<?php
+
+echo "yes";
+
+?><?php
+
+function form_custom_menu() {
+  $items = array();
+
+  $items['add_chapter'] = array( //this creates a URL that will call this form at "examples/form-example"
+    'title' => 'Chapter Form', //page title
+    'description' => 'A form to mess around with.',
+    'page callback' => 'drupal_get_form', //this is the function that will be called when the page is accessed.  for a form, use drupal_get_form
+    'page arguments' => array('form_custom_form'), //put the name of the form here
+    'access callback' => TRUE
+  );
+
+  return $items;
+}
+
+function form_custom_form($form, &$form_state) {
+  
+ $form['class_name'] = array(
+    '#type' => 'textfield', //you can find a list of available types in the form api
+    '#title' => 'Class Name',
+    '#size' => 10,
+    '#maxlength' => 10,
+    '#required' => TRUE, //make this field required 
+  );
+
+ $form['subject_name'] = array(
+    '#type' => 'textfield', //you can find a list of available types in the form api
+    '#title' => 'Subject Name',
+    '#size' => 10,
+    '#maxlength' => 10,
+    '#required' => TRUE, //make this field required 
+  );
+
+$form['chapter_name'] = array(
+    '#type' => 'textfield', //you can find a list of available types in the form api
+    '#title' => 'Chapter Name',
+    '#size' => 10,
+    '#maxlength' => 10,
+    '#required' => TRUE, //make this field required 
+  );
+
+$form['submit_button'] = array(
+    '#type' => 'submit',
+    '#value' => t('Click Here!'),
+  );
+
+$path = drupal_get_path('module', 'form_custom');
+// Attach the CSS and JS to the form
+$form['#attached'] = array
+(
+  'css' => array
+  (
+    'type' => 'file',
+    'data' => $path . '/form_custom.css',
+  ),
+  'js' => array
+  (
+    'type' => 'file',
+    'data' => $path . '/form_custom.js',
+  ),
+);
+$form['#theme'] = array('form_custom_form');
+  
+  return $form;
+}
+
+function form_custom_theme()
+{
+  $path = drupal_get_path('module', 'form_custom');
+  return array
+  (
+    'form_custom_form' => array
+    (
+      'render element' => 'form',
+      'template' => 'custom_form_theming',
+      'path' => $path . '/templates',
+    ),
+  );
+}
+
+
+/*function theme_form_custom_form($variables)
+{
+  // Isolate the form definition form the $variables array
+  $form = $variables['form'];
+  $output = '<h2>' . t('Please enter your information below') . '</h2>';
+  // Put the entire structure into a div that can be used for
+  // CSS purposes
+  $output .= '<div id="personal_details">';
+  // Each of the pieces of text is wrapped in a <span>
+  // tag to allow it to be floated left
+  $output .= '<span>' . t('My name is') . '</span>';
+  // Form elements are rendered with drupal_render()
+  $output .= drupal_render($form['class_name']);
+  $output .= drupal_render($form['subject_name']);
+  $output .= '<span>' . t('and I am') . '</span>';
+  $output .= drupal_render($form['chapter_name']);
+  $output .= '<span>' . t('years old.') . '</span>';
+  $output .= '</div>';
+  // Pass the remaining form elements through drupal_render_children()
+  $output .= drupal_render_children($form);
+  // return the output
+  return $output;
+}
+*/
+
+
+function form_custom_form_validate($form, &$form_state) {
+}
+
+function form_custom_form_submit($form, &$form_state) {
+
+  $subject_name = $form_state['values']['subject_name'];
+  $class_name = $form_state['values']['class_name'];
+  $chapter_name = $form_state['values']['chapter_name'];
+
+ $nid = db_insert('tbl_chapter') // Table name no longer needs {}
+->fields(array(
+  'class_name' => $class_name,
+  'chapter_name' => $chapter_name,
+  'subject_name' => $subject_name,
+))
+->execute();
+
+drupal_set_message('Chapter Inserted');
+}

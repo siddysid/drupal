@@ -1,0 +1,36 @@
+<?php
+
+/**
+ * @file
+ * Tests for the Current posts module
+ */
+
+class FormCustomTestCase extends DrupalWebTestCase {
+  public static function getInfo() {
+    return array(
+      'name' => 'Form Custom module functionality',
+      'description' => 'Tests hooks in the Form Custom module',
+      'group' => 'Form Custom',
+    ); 
+  }
+
+  public function setUp() {
+    parent::setUp('form_custom');
+  }
+
+  public function testPermission() {
+    $data = module_invoke('form_custom', 'permission');
+     $this->assertTrue(is_array($data), t('Permission hook returns array.'));
+    
+    $this->assertTrue(array_key_exists('access form_custom content', $data),
+    t('Permission is as expected.'));
+  }
+  public function testMenu() {
+    $items = module_invoke('form_custom', 'menu');
+    
+    $this->assertEqual(2, count($items), t('Two items in menu.'));
+    
+    $this->assertIdentical($items['admin/config/content/form_custom']['title'], 
+    $items['form_custom']['title'], t('Titles are identical.'));
+  }
+}
