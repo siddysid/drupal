@@ -1,0 +1,42 @@
+<?php
+/**
+ * Implements hook_block_info().
+ */
+function custom_block_block_info() {
+  $blocks['current_posts'] = array(
+    // The name that will appear in the block list.
+    'info' => t('Current posts'),
+    // Default setting.
+    'cache' => DRUPAL_CACHE_PER_ROLE,
+  );
+  return $blocks;
+}
+
+function custom_block_block_view($delta = '') {
+  switch ($delta) {
+    case 'current_posts':
+      $block['subject'] = t('Current posts');
+      if (user_access('access content')) {
+        // Use our custom function to retrieve data.
+        $result = array("data1,data2");
+        // Array to contain items for the block to render.
+        $items = array();
+        // Iterate over the resultset and format as links.
+        foreach ($result as $node) {
+          $items[] = array(
+            'data' => $node,
+          ); 
+        }
+       // No content in the last week.
+        if (empty($items)) {
+          $block['content'] = t('No posts available.');  
+        } 
+        else {
+          // Pass data through theme function.
+          $block['content'] = theme('item_list', array(
+            'items' => $items));
+        }
+      }
+    return $block;
+  }
+ }
