@@ -3,7 +3,7 @@
 function form_custom_menu() {
   $items = array();
 
-  $items['add_chapter'] = array( //this creates a URL that will call this form at "examples/form-example"
+  $items['add_chapters'] = array( //this creates a URL that will call this form at "examples/form-example"
     'title' => 'Chapter Form', //page title
     'description' => 'A form to mess around with.',
     'page callback' => 'drupal_get_form', //this is the function that will be called when the page is accessed.  for a form, use drupal_get_form
