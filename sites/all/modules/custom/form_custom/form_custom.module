@@ -1,9 +1,5 @@
 <?php
 
-echo "yes";
-
-?><?php
-
 function form_custom_menu() {
   $items = array();
 

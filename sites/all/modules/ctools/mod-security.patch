@@ -1,0 +1,50 @@
+Index: js/ajax-responder.js
+===================================================================
+RCS file: /cvs/drupal-contrib/contributions/modules/ctools/js/ajax-responder.js,v
+retrieving revision 1.18.2.2
+diff -u -p -r1.18.2.2 ajax-responder.js
+--- js/ajax-responder.js	5 Oct 2009 23:38:33 -0000	1.18.2.2
++++ js/ajax-responder.js	24 Oct 2009 00:52:51 -0000
+@@ -43,7 +43,7 @@
+       $.ajax({
+         type: "POST",
+         url: url,
+-        data: '',
++        data: 'js=1',
+         global: true,
+         success: Drupal.CTools.AJAX.respond,
+         error: function() {
+@@ -85,7 +85,7 @@
+         $.ajax({
+           type: "POST",
+           url: url,
+-          data: '',
++          data: 'js=1',
+           global: true,
+           success: Drupal.CTools.AJAX.respond,
+           error: function() {
+@@ -104,7 +104,7 @@
+         $(form).ajaxSubmit({
+           type: "POST",
+           url: url,
+-          data: '',
++          data: 'js=1',
+           global: true,
+           success: Drupal.CTools.AJAX.respond,
+           error: function() {
+Index: js/modal.js
+===================================================================
+RCS file: /cvs/drupal-contrib/contributions/modules/ctools/js/modal.js,v
+retrieving revision 1.17.2.2
+diff -u -p -r1.17.2.2 modal.js
+--- js/modal.js	13 Oct 2009 20:06:36 -0000	1.17.2.2
++++ js/modal.js	24 Oct 2009 00:52:51 -0000
+@@ -143,7 +143,7 @@
+       var ajaxOptions = {
+         type: 'POST',
+         url: url,
+-        data: '',
++        data: 'js=1',
+         global: true,
+         success: Drupal.CTools.AJAX.respond,
+         error: function() {
